@@ -6,7 +6,7 @@ Build-Depends: debhelper-compat (= 13)
 Standards-Version: 4.7.0
 Homepage: https://github.com/russiandesman/layouts_lin
 
-Package: desman-layouts-linux
+Package: layouts-lin
 Architecture: all
 Depends: ${misc:Depends}, xkb-data (>= 2.0), perl-base
 Provides: us-de-layout

@@ -28,7 +28,8 @@ jobs:
             run: |
                 ./build_deb.sh
 
-          - name: Result upload
+          - name: Upload artifacts
+            if: github.ref_type != 'tag'
             uses: actions/upload-artifact@v4
             with:
               name: packages
@@ -36,3 +37,13 @@ jobs:
                   *.deb
                   *.rpm
               if-no-files-found: error
+
+          - name: Publish release
+            if: github.ref_type == 'tag'
+            uses: softprops/action-gh-release@v2
+            with:
+              files: |
+                  *.deb
+                  *.rpm
+              generate_release_notes: true
+

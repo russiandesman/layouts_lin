@@ -1,5 +1,7 @@
-# desman_layouts_linux
+# layouts_lin
 XKB keyboard layouts for Linux, the counterpart of [layouts_win](https://github.com/russiandesman/layouts_win):
+
+[![GitHub All Releases](https://img.shields.io/github/downloads/russiandesman/layouts_lin/total?label=downloads-total&logo=github&style=flat-square)](https://github.com/russiandesman/layouts_lin/releases)
 
 | Layout | Description |
 | --- | --- |
