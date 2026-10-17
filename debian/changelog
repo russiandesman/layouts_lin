@@ -1,4 +1,4 @@
-us-de-layout (0.0-1) unstable; urgency=medium
+layouts-lin (0.0-1) unstable; urgency=medium
 
   * Initial release: add US-DE layout for German umlauts on US keyboards.
 

@@ -1,28 +1,16 @@
-#! /bin/bash
+#!/bin/bash
+# usage (as root): ./install.sh [--remove]
+set -eu
 
-cp us-de /usr/share/X11/xkb/symbols
+here=$(dirname "$(readlink -f "$0")")
+symbols=/usr/share/X11/xkb/symbols
 
-layouts_file="/usr/share/X11/xkb/rules/evdev.xml"
-
-export insert_before_string="</layoutList>"
-export layout_description="
-    <layout>
-      <configItem>
-        <name>us-de</name>
-        <shortDescription>en(US+DE)</shortDescription>
-        <description>en(US+DE) RAlt for l3</description>
-        <languageList>
-          <iso639Id>eng</iso639Id>
-          <iso639Id>deu</iso639Id>
-        </languageList>
-      </configItem>
-      <variantList/>
-    </layout>
-"
-layout_id_string="<name>us-de</name>"
-
-# if not already inserted
-if ! grep -q "${layout_id_string}" ${layouts_file}; then
-	perl -i.backup -pe 'print "$ENV{layout_description}\n" if m|$ENV{insert_before_string}|' ${layouts_file}
+if [ "${1:-}" = "--remove" ]; then
+	"$here/xkb-register.sh" remove
+	for f in "$here"/layouts/*; do rm -f "$symbols/$(basename "$f")"; done
+	exit 0
 fi
 
+cp "$here"/layouts/* "$symbols/"
+[ -f /usr/share/X11/xkb/rules/evdev.xml.backup ] || cp -p /usr/share/X11/xkb/rules/evdev.xml /usr/share/X11/xkb/rules/evdev.xml.backup
+"$here/xkb-register.sh" add

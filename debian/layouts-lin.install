@@ -1,0 +1,3 @@
+layouts/* usr/share/X11/xkb/symbols/
+layouts.xml usr/share/desman-layouts-linux/
+xkb-register.sh usr/share/desman-layouts-linux/

@@ -4,7 +4,7 @@ set -ex
 BUILD_DIR=$(mktemp -d)
 trap 'rm -rf "${BUILD_DIR}"' EXIT
 
-PKGNAME="us-de-layout"
+PKGNAME="layouts-lin"
 
 TAG=$(git describe --tags --match 'v*' --abbrev=0 2>/dev/null || echo "NO_TAGS_FOUND")
 RPMFULLNAME=$(git log -n 1 --pretty=format:%an)

@@ -1,15 +1,20 @@
-Source: us-de-layout
+Source: layouts-lin
 Section: x11
 Priority: optional
 Maintainer: Denis Maryin <des.maryin@googlemail.com>
 Build-Depends: debhelper-compat (= 13)
 Standards-Version: 4.7.0
-Homepage: https://github.com/russiandesman/us_de_layout_linux
+Homepage: https://github.com/russiandesman/layouts_lin
 
-Package: us-de-layout
+Package: desman-layouts-linux
 Architecture: all
-Depends: ${misc:Depends}, xkb-data (>= 2.0)
-Description: German ä,ö,ü,ß add-on for US layout
- Adds a US-DE keyboard layout variant for typing German umlauts (ä,ö,ü,ß) on US hardware.
- Select "en(US+DE) RAlt for l3" in your layout tool (e.g., xfce4-keyboard-settings).
+Depends: ${misc:Depends}, xkb-data (>= 2.0), perl-base
+Provides: us-de-layout
+Replaces: us-de-layout
+Conflicts: us-de-layout
+Description: US-DE and Russian mnemonic keyboard layouts
+ Adds XKB layouts: us-de (US with German umlauts and dead accents on RAlt),
+ ru-us-mn and ru-de-mn (Russian mnemonic over US and German keyboards) and
+ ru-ralt-us (Russian with the plain US layout on RAlt).
+ The layouts are registered in evdev.xml so layout tools list them.
  The original evdev.xml is safely modified and restored on removal.

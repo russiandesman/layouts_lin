@@ -1,20 +1,23 @@
-Name:           us-de-layout
+Name:           layouts-lin
 Version:        %{version}
 Release:        %{release}%{?dist}
-Summary:        German umlauts addon for US keyboard layout on Linux
+Summary:        US-DE and Russian mnemonic keyboard layouts for Linux
 
 License:        MIT
-URL:            https://github.com/russiandesman/us_de_layout_linux
+URL:            https://github.com/russiandesman/layouts_lin
 Source0:        %{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 Requires:       perl
 Requires:       libxkbfile
+Provides:       us-de-layout
+Obsoletes:      us-de-layout
 
 %description
-This package adds a custom XKB layout "en(US+DE) RAlt for l3" to the US keyboard,
-allowing typing of German characters (ä, ö, ü, ß) using Right Alt + a/o/u/s combinations.
-Select the layout in your desktop environment's keyboard settings after installation.
+Adds XKB layouts: us-de (US with German umlauts and dead accents on RAlt),
+ru-us-mn and ru-de-mn (Russian mnemonic over US and German keyboards) and
+ru-ralt-us (Russian with the plain US layout on RAlt).
+Select them in your desktop environment's keyboard settings after installation.
 
 %prep
 %setup -q
@@ -23,57 +26,32 @@ Select the layout in your desktop environment's keyboard settings after installa
 # No build step needed (config files only)
 
 %install
-# Install symbols file
 install -d -m 755 %{buildroot}/usr/share/X11/xkb/symbols
-install -m 644 us-de %{buildroot}/usr/share/X11/xkb/symbols/us-de
-# Create directory for backup
+install -m 644 layouts/* %{buildroot}/usr/share/X11/xkb/symbols/
 install -d -m 755 %{buildroot}/usr/share/%{name}
+install -m 644 layouts.xml %{buildroot}/usr/share/%{name}/layouts.xml
+install -m 755 xkb-register.sh %{buildroot}/usr/share/%{name}/xkb-register.sh
 
 %post
-layouts_file="/usr/share/X11/xkb/rules/evdev.xml"
+/usr/share/%{name}/xkb-register.sh add
 
-export insert_before_string="</layoutList>"
-export layout_description="
-    <layout>
-      <configItem>
-        <name>us-de</name>
-        <shortDescription>en(US+DE)</shortDescription>
-        <description>en(US+DE) RAlt for l3</description>
-        <languageList>
-          <iso639Id>eng</iso639Id>
-          <iso639Id>deu</iso639Id>
-        </languageList>
-      </configItem>
-      <variantList/>
-    </layout>
-"
-layout_id_string="<name>us-de</name>"
-
-# Backup evdev.xml before modification
-if [ -f /usr/share/X11/xkb/rules/evdev.xml ]; then
-	cp -p /usr/share/X11/xkb/rules/evdev.xml /usr/share/%{name}/evdev.xml.backup
-fi
-
-# if not already inserted
-if ! grep -q "${layout_id_string}" ${layouts_file}; then
-	perl -i.backup -pe 'print "$ENV{layout_description}\n" if m|$ENV{insert_before_string}|' ${layouts_file}
-fi
-
-%postun
-# Restore evdev.xml on uninstall (if $1 == 0)
+%preun
 if [ $1 -eq 0 ]; then
-	if [ -f /usr/share/%{name}/evdev.xml.backup ]; then
-		mv /usr/share/%{name}/evdev.xml.backup /usr/share/X11/xkb/rules/evdev.xml
-	fi
+	/usr/share/%{name}/xkb-register.sh remove
 fi
+
+# The old us-de-layout %%postun restores its evdev.xml backup, dropping our entries
+%triggerpostun -- us-de-layout
+/usr/share/%{name}/xkb-register.sh add
 
 %files
 %license LICENSE
 /usr/share/X11/xkb/symbols/us-de
+/usr/share/X11/xkb/symbols/ru-us-mn
+/usr/share/X11/xkb/symbols/ru-de-mn
+/usr/share/X11/xkb/symbols/ru-ralt-us
 /usr/share/%{name}
-%ghost /usr/share/%{name}/evdev.xml.backup
 
 %changelog
 * Fri Nov 14 2025 Denis Maryin <des.maryin@googlemail.com> - 0.0-1
 - Initial release: add US-DE layout for German umlauts on US keyboards.
-

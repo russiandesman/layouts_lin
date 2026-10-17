@@ -1,0 +1,47 @@
+    <!-- desman-layouts begin -->
+    <layout>
+      <configItem>
+        <name>us-de</name>
+        <shortDescription>en(US+DE)</shortDescription>
+        <description>en(US+DE) RAlt for l3</description>
+        <languageList>
+          <iso639Id>eng</iso639Id>
+          <iso639Id>deu</iso639Id>
+        </languageList>
+      </configItem>
+      <variantList/>
+    </layout>
+    <layout>
+      <configItem>
+        <name>ru-us-mn</name>
+        <shortDescription>ru(MN-US)</shortDescription>
+        <description>Russian Mnemonic over US</description>
+        <languageList>
+          <iso639Id>rus</iso639Id>
+        </languageList>
+      </configItem>
+      <variantList/>
+    </layout>
+    <layout>
+      <configItem>
+        <name>ru-de-mn</name>
+        <shortDescription>ru(MN-DE)</shortDescription>
+        <description>Russian Mnemonic over German</description>
+        <languageList>
+          <iso639Id>rus</iso639Id>
+        </languageList>
+      </configItem>
+      <variantList/>
+    </layout>
+    <layout>
+      <configItem>
+        <name>ru-ralt-us</name>
+        <shortDescription>ru(RAlt=US)</shortDescription>
+        <description>Russian, RAlt for US</description>
+        <languageList>
+          <iso639Id>rus</iso639Id>
+        </languageList>
+      </configItem>
+      <variantList/>
+    </layout>
+    <!-- desman-layouts end -->

@@ -1,0 +1,39 @@
+// US keyboard layout with German umlauts via Right Alt
+//
+// Standard US layout; Right Alt adds:
+//   RAlt+A = ä / Shift+RAlt+A = Ä
+//   RAlt+O = ö / Shift+RAlt+O = Ö
+//   RAlt+U = ü / Shift+RAlt+U = Ü
+//   RAlt+S = ß / Shift+RAlt+S = ẞ
+//   RAlt+E = €; RAlt+R = ₽; RAlt+Y = ¥; RAlt+F = £
+//
+// Dead keys (press, then the letter):
+//   RAlt+`  = grave       RAlt+Shift+` = tilde
+//   RAlt+'  = acute       RAlt+;       = diaeresis
+//   RAlt+6  = circumflex  RAlt+,       = cedilla
+//
+// Installation:
+//   sudo cp us-de /usr/share/X11/xkb/symbols/
+
+default partial alphanumeric_keys
+xkb_symbols "basic" {
+    include "us"
+    include "level3(ralt_switch)"
+
+    name[Group1] = "English (US, DE umlauts)";
+
+    key <AD03> { [ e,  E,  EuroSign,   EuroSign   ] }; // e E € €
+    key <AD04> { [ r,  R,  U20BD,      U20BD      ] }; // r R ₽ ₽
+    key <AD06> { [ y,  Y,  yen,        yen        ] }; // y Y ¥ ¥
+    key <AD07> { [ u,  U,  udiaeresis, Udiaeresis ] }; // u U ü Ü
+    key <AD09> { [ o,  O,  odiaeresis, Odiaeresis ] }; // o O ö Ö
+    key <AC01> { [ a,  A,  adiaeresis, Adiaeresis ] }; // a A ä Ä
+    key <AC02> { [ s,  S,  ssharp,     U1E9E      ] }; // s S ß ẞ
+    key <AC04> { [ f,  F,  sterling,   sterling   ] }; // f F £ £
+
+    key <TLDE> { [ grave,      asciitilde,  dead_grave,      dead_tilde      ] };
+    key <AC11> { [ apostrophe, quotedbl,    dead_acute,      dead_acute      ] };
+    key <AC10> { [ semicolon,  colon,       dead_diaeresis,  dead_diaeresis  ] };
+    key <AE06> { [ 6,          asciicircum, dead_circumflex, dead_circumflex ] };
+    key <AB08> { [ comma,      less,        dead_cedilla,    dead_cedilla    ] };
+};

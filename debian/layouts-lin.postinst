@@ -1,0 +1,29 @@
+#!/bin/sh
+set -e
+
+package="desman-layouts-linux"
+layouts_file="/usr/share/X11/xkb/rules/evdev.xml"
+backup_suffix="${package}_backup"
+backup_layouts_file="${layouts_file}.${backup_suffix}"
+tmp_file="${layouts_file}.${package}_tmp"
+
+trap 'rm -f "${tmp_file}"' EXIT
+
+case "$1" in
+	configure)
+		# Create diversion of layout if not already present
+		if ! dpkg-divert --listpackage "${layouts_file}" | grep -q "${package}"; then
+			dpkg-divert --package "${package}" --add --rename --divert "${backup_layouts_file}" "${layouts_file}"
+		fi
+		if [ ! -f "${backup_layouts_file}" ]; then
+			echo "Error: ${backup_layouts_file} not found. Cannot add layouts." >&2
+			exit 1
+		fi
+
+		cp -p "${backup_layouts_file}" "${tmp_file}"
+		"/usr/share/${package}/xkb-register.sh" add "${tmp_file}"
+		mv -f "${tmp_file}" "${layouts_file}"
+	;;
+esac
+
+#DEBHELPER#

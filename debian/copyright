@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: us_de_layout_linux
-Source: https://github.com/russiandesman/us_de_layout_linux
+Upstream-Name: layouts_lin
+Source: https://github.com/russiandesman/layouts_lin
 
 Files: *
 Copyright: 2025 Denis Maryin <des.maryin@googlemail.com>
